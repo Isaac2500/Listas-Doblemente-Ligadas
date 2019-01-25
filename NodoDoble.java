@@ -19,15 +19,15 @@ public class NodoDoble{
         return this.nodoSiguiente;
     }
 
-    public void enlazarSiguiente(Nodo xNodo){
+    public void enlazarSiguiente(NodoDoble xNodo){
         this.nodoSiguiente = xNodo;
     }
 
-    public void enlazarAnterior(Nodo xNodo){
+    public void enlazarAnterior(NodoDoble xNodo){
         this.nodoAnterior = xNodo;
     }
 
-    public void setDato(Objetc Dato){
+    public void setDato(Object Dato){
         this.data = Dato;
     }
 
