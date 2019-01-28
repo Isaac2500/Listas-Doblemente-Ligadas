@@ -2,16 +2,17 @@
 public class ListaPolinomios{
 
     private Nodo head;
-    private int size = 0;
+    private int size;
 
     public ListaPolinomios(){
         this.head = null;
+        this.size = 0;
     }
 
     public static void main(String[] args) {
         ListaPolinomios Ls = new ListaPolinomios();
 
-        Ls.insertarTermino(new Nodo(4,2));
+        //Ls.insertarTermino();
         Ls.imprimirPolinomio();
     }
 
@@ -20,12 +21,12 @@ public class ListaPolinomios{
         Nodo temp = head;
         boolean band = false;
 
-        if(temp.obtenerSiguiente() == null){
+        if(this.listaVacia() == true){
             return false;
         }else{
             while(temp.obtenerSiguiente() != null || band == false){
             
-                if (temp.obtenerExponente() != xNodo.obtenerExponente()) {
+                if (temp.obtenerExponente() == xNodo.obtenerExponente()) {
     
                     temp.establecerCoeficiente(xNodo.obtenerCoeficiente() + temp.obtenerCoeficiente());
                     band = true;
@@ -44,54 +45,30 @@ public class ListaPolinomios{
         }     
     }
 
-    public void insertarTermino(Nodo xNodo){
+    public void insertarTermino(int x, int y){
+
         
-        if(this.encontrarSimilitudes(xNodo) != true){
+        Nodo nuevo = new Nodo(x,y);
+        
+        if(nuevo.obtenerExponente()>this.gradoPolinomio()){
             Nodo temp = head;
+            while(temp.obtenerSiguiente()!=null){
+                temp = temp.obtenerSiguiente();
+            }
             
-            if(temp.obtenerSiguiente() == null){
-                
-                temp.enlazarSiguiente(xNodo);
-                xNodo.enlazarAnterior(temp);
-                size++;
+            temp.enlazarSiguiente(nuevo);
+            nuevo.enlazarAnterior(temp);
+            size++;
+        
+        }else{
 
-            }else{
+            if(this.encontrarSimilitudes(nuevo)!= true){
 
-                int band = 0;
-                while (temp.obtenerSiguiente() != null || band == 0) {
-                    
-                    if(temp.obtenerExponente()<xNodo.obtenerExponente()){
-                        band = 1;
-                    }else{
-                        temp = temp.obtenerSiguiente();
-                    }
-                }
-
-               Nodo temp2 = head;
-
-               while(temp2.obtenerSiguiente()!=temp){
-                    temp2 = temp2.obtenerSiguiente();    
-               }
-
-               xNodo.enlazarSiguiente(temp);
-               xNodo.enlazarAnterior(temp2);
-               temp.enlazarAnterior(xNodo);
-               temp2.enlazarSiguiente(xNodo);
-
-               size++;
             }
         }
-    }
-
-/*    public void ordenarTermino(Nodo xNode){
-        
-        Nodo temp = head;
-        while(temp.obtenerSiguiente() != null || temp.obtenerExponente()<xNode.obtenerExponente()){
-            
-        }
 
     }
-*/
+
     public boolean listaVacia(){
         if (size == 0) {
             return true;
@@ -110,5 +87,19 @@ public class ListaPolinomios{
 
     }
 
+    public int gradoPolinomio(){
+        Nodo temp= head;
+        int grado = 0;
+
+        while (temp.obtenerSiguiente() != null) {
+            
+            if(grado<temp.obtenerExponente()){
+                grado = temp.obtenerExponente();
+            }
+            temp = temp.obtenerSiguiente();
+        }
+
+        return grado;
+    }
 
 }
